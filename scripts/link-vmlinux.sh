@@ -102,6 +102,11 @@ vmlinux_link()
 		${wl}--whole-archive ${objs} ${wl}--no-whole-archive	\
 		${wl}--start-group ${libs} ${wl}--end-group		\
 		$@ ${ldlibs}
+
+	if [ -n "${AFTER_LINK}" ]; then
+		/usr/lib/rpm/debugedit -b ${RPM_BUILD_DIR} -d /usr/src/debug -i ${output} \
+			> ${output}.id
+	fi
 }
 
 # generate .BTF typeinfo from DWARF debuginfo
