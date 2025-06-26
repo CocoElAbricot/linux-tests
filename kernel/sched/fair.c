@@ -12205,8 +12205,14 @@ update_newidle_cost(struct sched_domain *sd, u64 cost, unsigned int success)
 		/*
 		 * Track max cost of a domain to make sure to not delay the
 		 * next wakeup on the CPU.
+		 *
+		 * sched_balance_newidle() bumps the cost whenever newidle
+		 * balance fails, and we don't want things to grow out of
+		 * control.  Use the sysctl_sched_migration_cost as the upper
+		 * limit, plus a litle extra to avoid off by ones.
 		 */
-		sd->max_newidle_lb_cost = cost;
+		sd->max_newidle_lb_cost =
+			min(cost, sysctl_sched_migration_cost + 200);
 		sd->last_decay_max_lb_cost = now;
 
 	} else if (time_after(now, next_decay)) {
@@ -12931,6 +12937,13 @@ static int sched_balance_newidle(struct rq *this_rq, struct rq_flags *rf)
 			domain_cost = t1 - t0;
 			curr_cost += domain_cost;
 			t0 = t1;
+
+			/*
+			 * Failing newidle means it is not effective;
+			 * bump the cost so we end up doing less of it.
+			 */
+			if (!pulled_task)
+				domain_cost = (3 * sd->max_newidle_lb_cost) / 2;
 
 			/*
 			 * Track max cost of a domain to make sure to not delay the
