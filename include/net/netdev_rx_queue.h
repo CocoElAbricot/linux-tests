@@ -27,6 +27,8 @@ struct netdev_rx_queue {
 	 */
 	struct napi_struct		*napi;
 	struct pp_memory_provider_params mp_params;
+
+	void			*xs_kabi_padding;
 } ____cacheline_aligned_in_smp;
 
 /*

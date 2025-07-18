@@ -120,6 +120,8 @@ struct blk_integrity {
 	unsigned char				pi_offset;
 	unsigned char				interval_exp;
 	unsigned char				tag_size;
+
+	void	*xs_kabi_padding;
 };
 
 typedef unsigned int __bitwise blk_mode_t;
@@ -218,6 +220,8 @@ struct gendisk {
 	 * devices that do not have multiple independent access ranges.
 	 */
 	struct blk_independent_access_ranges *ia_ranges;
+
+	void	*xs_kabi_padding;
 };
 
 /**
@@ -399,6 +403,8 @@ struct queue_limits {
 	 * due to possible offsets.
 	 */
 	unsigned int		dma_alignment;
+
+	void	*xs_kabi_padding;
 	unsigned int		dma_pad_mask;
 
 	struct blk_integrity	integrity;
@@ -594,6 +600,8 @@ struct request_queue {
 	struct mutex		debugfs_mutex;
 
 	bool			mq_sysfs_init_done;
+
+	void	*xs_kabi_padding;
 };
 
 /* Keep blk_queue_flag_name[] in sync with the definitions below */
@@ -1573,6 +1581,8 @@ struct block_device_operations {
 	 * driver.
 	 */
 	int (*alternative_gpt_sector)(struct gendisk *disk, sector_t *sector);
+
+	void	*xs_kabi_padding;
 };
 
 #ifdef CONFIG_COMPAT

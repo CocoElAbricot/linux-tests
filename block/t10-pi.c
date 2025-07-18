@@ -12,15 +12,6 @@
 #include <linux/unaligned.h>
 #include "blk.h"
 
-struct blk_integrity_iter {
-	void			*prot_buf;
-	void			*data_buf;
-	sector_t		seed;
-	unsigned int		data_size;
-	unsigned short		interval;
-	const char		*disk_name;
-};
-
 static __be16 t10_pi_csum(__be16 csum, void *data, unsigned int len,
 		unsigned char csum_type)
 {

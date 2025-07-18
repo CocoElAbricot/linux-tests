@@ -92,6 +92,8 @@ struct ipv6_devconf {
 	__u8		ra_honor_pio_pflag;
 
 	struct ctl_table_header *sysctl_header;
+
+	void		*xs_kabi_padding;
 };
 
 struct ipv6_params {

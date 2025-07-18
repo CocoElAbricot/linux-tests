@@ -805,6 +805,7 @@ struct vm_area_struct {
 	struct vma_numab_state *numab_state;	/* NUMA Balancing state */
 #endif
 	struct vm_userfaultfd_ctx vm_userfaultfd_ctx;
+	void	*xs_kabi_padding;
 } __randomize_layout;
 
 #ifdef CONFIG_NUMA
@@ -1065,6 +1066,7 @@ struct mm_struct {
 #endif
 		} lru_gen;
 #endif /* CONFIG_LRU_GEN_WALKS_MMU */
+	void	*xs_kabi_padding;
 	} __randomize_layout;
 
 	/*

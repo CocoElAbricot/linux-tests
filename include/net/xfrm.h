@@ -126,6 +126,8 @@ struct xfrm_state_walk {
 	u8			proto;
 	u32			seq;
 	struct xfrm_address_filter *filter;
+
+	void		*xs_kabi_padding;
 };
 
 enum {
@@ -152,6 +154,8 @@ struct xfrm_dev_offload {
 	u8			dir : 2;
 	u8			type : 2;
 	u8			flags : 2;
+
+	void		*xs_kabi_padding;
 };
 
 struct xfrm_mode {
